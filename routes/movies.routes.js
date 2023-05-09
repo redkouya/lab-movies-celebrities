@@ -68,4 +68,27 @@ router.post("/:id/delete", async (req, res, next) => {
   }
 });
 
+//* GET "/movies/:id/edit"
+router.get("/:id/edit",(req,res,next)=>{
+    Movie.findById(req.params.id)
+    .populate("cast")
+    .then((oneMovie)=>{
+        console.log("LOG",oneMovie.cast)
+
+        Celeb.find()
+        .then((allCelebs)=>{
+            console.log("allCelebs",allCelebs)
+            res.render("movies/edit-movie",{oneMovie,allCelebs})
+
+        })
+        .catch(()=>{
+            
+        })
+
+    })
+    .catch((err=>{
+        next(err)
+    }))
+})
+
 module.exports = router;

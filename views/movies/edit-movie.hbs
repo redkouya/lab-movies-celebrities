@@ -1,3 +1,29 @@
 <div>
     <h3>Editar película</h3>
+
+    <h2>{{this.oneMovie.title}}</h2>
+    <form action="/movies/{{this.oneMovie._id}}/edit" method="post">
+    <div>
+        <label for="title">Nombre</label>
+        <input type="text" name="title" value="{{this.oneMovie.title}}">
+    </div>
+    <div>
+        <label for="genre">Nombre</label>
+        <input type="text" name="genre" value="{{this.oneMovie.genre}}">
+    </div>
+      <div>
+        <label for="plot">Nombre</label>
+        <input type="text" name="plot" value="{{this.oneMovie.plot}}">
+    </div>
+    <div>
+        <select name="cast" >
+            {{#each this.allCelebs}}
+                <option value="{{this._id}}">{{name}}</option>
+
+            {{/each}}
+
+
+        </select>
+    </div>
+    </form>
 </div>
