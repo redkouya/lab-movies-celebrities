@@ -21,14 +21,39 @@ router.get("/create", (req, res, next) => {
 router.post("/create", async (req, res, next) => {
   console.log(req.body);
   try {
-    const { title, genre, plot,cast } = req.body;
+    const { title, genre, plot, cast } = req.body;
     Movie.create({
-        title,
-        genre,
-        plot,
-        cast
-    })
-    res.redirect("/")
+      title,
+      genre,
+      plot,
+      cast,
+    });
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
+});
+
+//* GET "/movies/movies" => listado de todas las peliculas de la BD
+router.get("/movies", async (req, res, next) => {
+  try {
+    const allMovies = await Movie.find();
+    // console.log("allMovies",allMovies)
+    res.render("movies/movies", { allMovies });
+  } catch (err) {
+    next(err);
+  }
+});
+
+//* GET "/movies/:id" => detalles de la pelicula, popular cast
+router.get("/:id", async (req, res, next) => {
+  try {
+    console.log(req.params)
+    const movieDetails = await Movie.findById(req.params.id)
+    .populate("cast")
+    console.log(movieDetails)
+    res.render("movies/movie-details",{movieDetails})
+
   } catch (err) {
     next(err);
   }
