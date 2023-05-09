@@ -91,4 +91,16 @@ router.get("/:id/edit",(req,res,next)=>{
     }))
 })
 
+//* POST "/movies/:id*/edit"
+
+router.post("/:id/edit",(req,res,next)=>{
+    const {title,genre,plot,cast}=req.body
+
+    Movie.findByIdAndUpdate(req.params.id,{
+        title,genre,plot,cast
+    }).then(()=>{
+        console.log("pelicula actualizada")
+        res.redirect("/movies/movies")
+    })
+})
 module.exports = router;
