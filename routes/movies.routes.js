@@ -48,12 +48,21 @@ router.get("/movies", async (req, res, next) => {
 //* GET "/movies/:id" => detalles de la pelicula, popular cast
 router.get("/:id", async (req, res, next) => {
   try {
-    console.log(req.params)
-    const movieDetails = await Movie.findById(req.params.id)
-    .populate("cast")
-    console.log(movieDetails)
-    res.render("movies/movie-details",{movieDetails})
+    console.log(req.params);
+    const movieDetails = await Movie.findById(req.params.id).populate("cast");
+    console.log(movieDetails);
+    res.render("movies/movie-details", { movieDetails });
+  } catch (err) {
+    next(err);
+  }
+});
 
+//* GET "/movies/:id/delete" => borrará una pelicula
+router.post("/:id/delete", async (req, res, next) => {
+    console.log("ENTRA POST")
+  try {
+    await Movie.findByIdAndDelete(req.params.id);
+    res.redirect("/movies/movies");
   } catch (err) {
     next(err);
   }
