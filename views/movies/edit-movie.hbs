@@ -19,9 +19,14 @@
       <select name="cast" multiple>
         {{#each this.allCelebs}}
           <option value="{{this._id}}" >{{name}}a</option>
-            {{!-- {{#each this.oneMovie.cast}}
+
+          
+             {{#each this.oneMovie.cast}}
                 <option value="{{this._id}}">{{this.name}}</option>
-            {{/each}} --}}
+                 {{#if (this._id _id)}}  {{! works! }}
+                     OK
+                  {{/if}}
+            {{/each}} 
         {{/each}}
             
       </select>

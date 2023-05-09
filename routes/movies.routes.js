@@ -59,7 +59,7 @@ router.get("/:id", async (req, res, next) => {
 
 //* GET "/movies/:id/delete" => borrará una pelicula
 router.post("/:id/delete", async (req, res, next) => {
-    console.log("ENTRA POST")
+  console.log("ENTRA POST");
   try {
     await Movie.findByIdAndDelete(req.params.id);
     res.redirect("/movies/movies");
@@ -69,38 +69,37 @@ router.post("/:id/delete", async (req, res, next) => {
 });
 
 //* GET "/movies/:id/edit"
-router.get("/:id/edit",(req,res,next)=>{
-    Movie.findById(req.params.id)
-    .populate("cast")
-    .then((oneMovie)=>{
-        console.log("LOG",oneMovie.cast)
-
-        Celeb.find()
-        .then((allCelebs)=>{
-            console.log("allCelebs",allCelebs)
-            res.render("movies/edit-movie",{oneMovie,allCelebs})
-
+router.get("/:id/edit", (req, res, next) => {
+  let queryMovies;
+  Movie.findById(req.params.id)
+    //.populate("cast")
+    .then((oneMovie) => {
+      Celeb.find()
+        .then((allCelebs) => {
+          res.render("movies/edit-movie", { oneMovie, allCelebs });
         })
-        .catch(()=>{
-            
-        })
-
+        .catch((err) => {
+          next(err);
+        });
     })
-    .catch((err=>{
-        next(err)
-    }))
-})
+    .catch((err) => {
+      next(err);
+    });
+});
 
 //* POST "/movies/:id*/edit"
 
-router.post("/:id/edit",(req,res,next)=>{
-    const {title,genre,plot,cast}=req.body
+router.post("/:id/edit", (req, res, next) => {
+  const { title, genre, plot, cast } = req.body;
 
-    Movie.findByIdAndUpdate(req.params.id,{
-        title,genre,plot,cast
-    }).then(()=>{
-        console.log("pelicula actualizada")
-        res.redirect("/movies/movies")
-    })
-})
+  Movie.findByIdAndUpdate(req.params.id, {
+    title,
+    genre,
+    plot,
+    cast,
+  }).then(() => {
+    console.log("pelicula actualizada");
+    res.redirect("/movies/movies");
+  });
+});
 module.exports = router;

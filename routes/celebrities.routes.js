@@ -42,5 +42,17 @@ router.get("/celebrities",async (req,res,next)=>{
    
 })
 
+//* GET "/celebrities/:id"
 
+router.get("/:id",(req,res,next)=>{
+
+  Celeb.findById(req.params.id)
+  .then((oneCeleb)=>{
+    res.render("celebrities/celebritie-details",oneCeleb)
+
+  })
+  .catch((err)=>{
+    next(err)
+  })
+})
 module.exports = router;
