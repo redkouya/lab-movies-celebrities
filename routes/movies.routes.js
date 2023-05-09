@@ -87,7 +87,7 @@ router.get("/:id/edit", (req, res, next) => {
     });
 });
 
-//* POST "/movies/:id*/edit"
+//* POST "/movies/:id/edit"
 
 router.post("/:id/edit", (req, res, next) => {
   const { title, genre, plot, cast } = req.body;
