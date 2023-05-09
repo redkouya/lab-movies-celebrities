@@ -47,7 +47,7 @@ router.get("/:id",(req,res,next)=>{
 
   Celeb.findById(req.params.id)
   .then((oneCeleb)=>{
-    res.render("celebrities/celebritie-details",oneCeleb)
+    res.render("celebrities/celebrity-details",oneCeleb)
 
   })
   .catch((err)=>{
@@ -64,6 +64,34 @@ router.post("/:id/delete",(req,res,next)=>{
   })
   .catch((err)=>{
     next(err)
+  })
+})
+
+//* GET "celebrities/:id/edit" => ver formulario de crear celebridad
+router.get("/:id/edit",(req,res,next)=>{
+
+  Celeb.findById(req.params.id)
+  .then((foundCeleb)=>{
+
+    res.render("celebrities/edit-celebrity",foundCeleb)
+  })
+  .catch((err)=>{
+    next(err)
+  })
+})
+
+//* POST "celebrities/:id/edit"  actualizar datos de la BD
+router.post("/:id/edit",(req,res,next)=>{
+  const {name,occupation,catchPhrase} =body.req
+
+  Celeb.findByIdAndUpdate(req.params.id,{
+    name,occupation,catchPhrase
+  })
+  .then(()=>{
+      console.log("Celebridad actualizada")
+  })
+  .catch((err)=>{
+      next(err)
   })
 })
 module.exports = router;

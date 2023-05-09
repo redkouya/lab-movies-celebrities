@@ -1,0 +1,18 @@
+<h2>{{name}}</h2>
+<form action="/celebrities/{{_id}}/edit" method="post">
+    
+    <label for="name">Nombre</label>
+    <input type="text" name="name" value="{{name}}">
+    <br>
+    <label for="occupation">Ocupación:</label>
+    <input type="text" name="occupation" value="{{occupation}}">
+    <br>
+    <label for="catchPhrase">Ocupación:</label>
+    <input type="text" name="catchPhrase" value="{{catchPhrase}}">
+    <br>
+    <button>Actualizar</button>
+</form>
+
+
+<p>Ocupación: {{occupation}}</p>
+<p>Fase: {{catchPhrase}}</p>
