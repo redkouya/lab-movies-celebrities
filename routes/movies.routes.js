@@ -69,22 +69,42 @@ router.post("/:id/delete", async (req, res, next) => {
 });
 
 //* GET "/movies/:id/edit"
-router.get("/:id/edit", (req, res, next) => {
-  let queryMovies;
-  Movie.findById(req.params.id)
-    //.populate("cast")
-    .then((oneMovie) => {
-      Celeb.find()
-        .then((allCelebs) => {
-          res.render("movies/edit-movie", { oneMovie, allCelebs });
-        })
-        .catch((err) => {
-          next(err);
-        });
-    })
-    .catch((err) => {
-      next(err);
+router.get("/:id/edit", async (req, res, next) => {
+  try {
+    const oneMovie = await Movie.findById(req.params.id);
+    console.log("oneMovie", oneMovie.cast);
+    const allCelebs = await Celeb.find();
+
+    allCelebs.map((eachCeleb, index, array) => {
+      oneMovie.cast.forEach((element) => {
+        let eachCelebStr = eachCeleb._id.toString();
+        if (eachCelebStr === element.toString()) {
+          console.log("RETURN TRUE");
+          return (array[index].selected = true);
+        }
+      });
+
+      console.log("allCelebs", allCelebs);
     });
+    res.render("movies/edit-movie", { oneMovie, allCelebs });
+  } catch (err) {
+    next(err);
+  }
+
+  // Movie.findById(req.params.id)
+  //   //.populate("cast")
+  //   .then((oneMovie) => {
+  //     Celeb.find()
+  //       .then((allCelebs) => {
+  //         res.render("movies/edit-movie", { oneMovie, allCelebs });
+  //       })
+  //       .catch((err) => {
+  //         next(err);
+  //       });
+  //   })
+  //   .catch((err) => {
+  //     next(err);
+  //   });
 });
 
 //* POST "/movies/:id/edit"

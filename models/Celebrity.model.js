@@ -4,7 +4,8 @@ const celebSchema=new mongoose.Schema(
     {
         name: String,
         occupation: String,
-        catchPhrase: String
+        catchPhrase: String,
+        selected:Boolean
     }
 )
 

@@ -18,13 +18,18 @@
     <div>
       <select name="cast" multiple>
         {{#each this.allCelebs}}
+          {{#if this.selected}}
+            <option
+              value="{{this._id}}"
+              selected={{this.selected}}
+            >{{name}}</option>
 
-           <option value="{{this._id}}" >{{name}}</option>
+          {{else}}
+            <option value="{{this._id}}">{{name}}</option>
+          {{/if}}
 
-          
-              
         {{/each}}
-           
+
       </select>
     </div>
     <button>Actualizar</button>
