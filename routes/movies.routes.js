@@ -75,14 +75,18 @@ router.get("/:id/edit", async (req, res, next) => {
     console.log("oneMovie", oneMovie.cast);
     const allCelebs = await Celeb.find();
 
-    allCelebs.map((eachCeleb, index, array) => {
+    allCelebs.map((eachCeleb) => {
       oneMovie.cast.forEach((element) => {
         let eachCelebStr = eachCeleb._id.toString();
-        if (eachCelebStr === element.toString()) {
-          console.log("RETURN TRUE");
-          return (array[index].selected = true);
+        if (eachCelebStr === element.toString()) { //!checkea que las ids coincidan para marcarlas o no
+         
+          return (eachCeleb.selected = true); //! añade una nueva propiedad para ser usada en handlebar
+        }
+        else{
+          return eachCeleb
         }
       });
+
 
       console.log("allCelebs", allCelebs);
     });
