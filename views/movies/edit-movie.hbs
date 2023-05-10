@@ -17,12 +17,12 @@
     </div>
     <div>
       <select name="cast" multiple>
-        {{#each this.allCelebs}}
+        {{#each this.arrayCeleb}}
           {{#if this.selected}}
             <option
               value="{{this._id}}"
-              selected={{this.selected}}
-            >{{name}}</option>
+              selected
+            >{{name}}a</option>
 
           {{else}}
             <option value="{{this._id}}">{{name}}</option>

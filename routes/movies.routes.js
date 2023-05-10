@@ -68,29 +68,30 @@ router.post("/:id/delete", async (req, res, next) => {
   }
 });
 
-//* GET "/movies/:id/edit"
+//* GET "/movies/:id/edit" con map de celebrity para seleccion de option
 router.get("/:id/edit", async (req, res, next) => {
   try {
     const oneMovie = await Movie.findById(req.params.id);
     console.log("oneMovie", oneMovie.cast);
     const allCelebs = await Celeb.find();
+    let arrayCeleb=[]
 
-    allCelebs.map((eachCeleb) => {
-      oneMovie.cast.forEach((element) => {
-        let eachCelebStr = eachCeleb._id.toString();
-        if (eachCelebStr === element.toString()) { //!checkea que las ids coincidan para marcarlas o no
-         
-          return (eachCeleb.selected = true); //! añade una nueva propiedad para ser usada en handlebar
+    allCelebs.forEach((eachCeleb) => {
+      oneMovie.cast.forEach((element,index) => {
+        let eachCelebStr = eachCeleb._id.toString();        
+        arrayCeleb.push(eachCeleb)
+
+        if (eachCelebStr === element.toString()) 
+        { //!checkea que las ids coincidan para marcarlas o no   
+                
+          arrayCeleb[arrayCeleb.length-1].selected=true         
         }
-        else{
-          return eachCeleb
-        }
+       
       });
+      console.log("arrayCeleb",arrayCeleb)
 
-
-      console.log("allCelebs", allCelebs);
     });
-    res.render("movies/edit-movie", { oneMovie, allCelebs });
+    res.render("movies/edit-movie", { oneMovie, arrayCeleb });
   } catch (err) {
     next(err);
   }
